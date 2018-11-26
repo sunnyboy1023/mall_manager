@@ -26,7 +26,11 @@ export default {
   methods: {
       login(){
           this.$http.post('/login', this.formdata).then(res => {
-              console.log(res)
+              var msg = res.data.meta.msg
+              if (res.data.meta.status === 200) {this.$message.success(msg);this.$router.push('/home')}
+              else {
+                  this.$message.error(msg);
+              }
           })
       }
   }
