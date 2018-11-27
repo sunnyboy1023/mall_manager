@@ -7,9 +7,19 @@ import Home from '../components/home/home.vue'
 Vue.use(Router)
 
 export default new Router({
-  routes: [
-    { name: 'login', path:'/login', component: Login},
-    { name: 'home', path:'/home', component: Home},
-    { path:'/', component: Login}
+  routes: [{
+    name: 'login',
+    path: '/login',
+    component: Login
+  },
+  {
+    name: 'home',
+    path: '/home',
+    component: Home
+  },
+  {
+    path: '/',
+    component: Login
+  }
   ]
 })
