@@ -94,7 +94,32 @@
                         <el-breadcrumb-item>用户列表</el-breadcrumb-item>
                     </el-breadcrumb>
                 </div>
-                <div></div>
+                <div>
+                    <el-input placeholder="请输入内容" v-model="searchVal" class="search">
+                        <el-button slot="append" icon="el-icon-search"></el-button>
+                    </el-input>
+                    <el-button type="info" plain>搜索</el-button>
+
+                    <el-table :data="tableData" stripe style="width: 100%">
+                        <el-table-column prop="date" label="ID" width="200">
+                        </el-table-column>
+                        <el-table-column prop="date" label="姓名" width="200">
+                        </el-table-column>
+                        <el-table-column prop="date" label="邮箱" width="400">
+                        </el-table-column>
+                        <el-table-column prop="name" label="创建日期" width="350">
+                        </el-table-column>
+                        <el-table-column prop="name" label="用户状态" width="200">
+                        </el-table-column>
+                        <el-table-column prop="name" label="操作">
+                        </el-table-column>
+                    </el-table>
+
+                    <div class="block">
+                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
+                        </el-pagination>
+                    </div>
+                </div>
             </el-card>
         </el-main>
     </el-container>
@@ -105,8 +130,10 @@
 export default {
     data() {
         return {
-            username: ""
-        };
+            username: "",
+            tableData: [],
+            searchVal: ''
+        }
     },
     beforeCreate() {
         const token = sessionStorage.getItem("token");
@@ -152,5 +179,9 @@ export default {
 
 .logout {
     line-height: 60px;
+}
+
+.search {
+    width: 400px;
 }
 </style>
