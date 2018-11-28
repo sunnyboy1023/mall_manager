@@ -20,13 +20,13 @@
     </el-header>
     <el-container>
         <el-aside width="200px" class="aside">
-            <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened>
+            <el-menu default-active="2" class="el-menu-vertical-demo" unique-opened router>
                 <el-submenu index="1">
                     <template slot="title">
                         <i class="el-icon-location"></i>
                         <span>用户管理</span>
                     </template>
-                    <el-menu-item index="1-4-1">
+                    <el-menu-item index="user">
                         <i class="el-icon-menu"></i>
                         <span>用户列表</span>
                     </el-menu-item>
@@ -86,52 +86,7 @@
             </el-menu>
         </el-aside>
         <el-main class="main">
-            <el-card class="box-card">
-                <div slot="header" class="clearfix">
-                    <el-breadcrumb separator-class="el-icon-arrow-right">
-                        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-                        <el-breadcrumb-item>用户管理</el-breadcrumb-item>
-                        <el-breadcrumb-item>用户列表</el-breadcrumb-item>
-                    </el-breadcrumb>
-                </div>
-                <div>
-                    <el-input placeholder="请输入内容" v-model="searchVal" class="search">
-                        <el-button slot="append" icon="el-icon-search"></el-button>
-                    </el-input>
-                    <el-button type="info" plain>搜索</el-button>
-
-                    <el-table :data="usersList" stripe style="width: 100%">
-                        <el-table-column type="index" label="ID" width="200">
-                        </el-table-column>
-                        <el-table-column prop="username" label="姓名" width="200">
-                        </el-table-column>
-                        <el-table-column prop="email" label="邮箱" width="350">
-                        </el-table-column>
-                        <el-table-column prop="role_name" label="角色" width="200">
-                        </el-table-column>
-                        <el-table-column prop="create_time" label="创建日期" width="300">
-                        </el-table-column>
-                        <el-table-column label="用户状态" width="200">
-                            <template slot-scope="scope">
-                                <el-switch v-model="scope.row.mg_state" active-color="#13ce66" inactive-color="#ff4949">
-                                </el-switch>
-                            </template>
-                        </el-table-column>
-                        <el-table-column label="操作">
-                            <template slot-scope="scope">
-                                <el-button type="primary" size="mini" icon="el-icon-edit" plain circle></el-button>
-                                <el-button type="danger" size="mini" icon="el-icon-delete" plain circle></el-button>
-                                <el-button type="success" size="mini" icon="el-icon-check" plain circle></el-button>
-
-                            </template>
-                        </el-table-column>
-                    </el-table>
-                    <div class="block">
-                        <el-pagination @size-change="handleSizeChange" @current-change="handleCurrentChange" :current-page="currentPage4" :page-sizes="[100, 200, 300, 400]" :page-size="100" layout="total, sizes, prev, pager, next, jumper" :total="400">
-                        </el-pagination>
-                    </div>
-                </div>
-            </el-card>
+            <router-view></router-view>
         </el-main>
     </el-container>
 </el-container>
@@ -139,53 +94,29 @@
 
 <script>
 export default {
-    data() {
-        return {
-            username: "",
-            usersList: [],
-            searchVal: '',
-            query: '',
-            pagenum: 1,
-            pagesize: 2
-        }
-    },
-    beforeCreate() {
-        const token = localStorage.getItem("token");
-        if (!token) {
-            this.$message.warning("请先登录");
-            this.$router.push("/login");
-        }
-    },
-    mounted() {
-        this.username = localStorage.getItem("username");
-        this.getUserList()
-    },
-    methods: {
-        logout() {
-            localStorage.clear();
-            this.$message.warning("退出登录");
-            this.$router.push("/login");
-        },
-        async getUserList() {
-            this.$http.defaults.headers.common['Authorization'] = localStorage.getItem('token')
-            // const AUTH_TOKEN = localStorage.getItem('token')
-            // this.$http.defaults.headers.common['Authorization'] = AUTH_TOKEN
-            const res = await this.$http.get(`users?query=${this.query}&pagenum=${this.pagenum}&pagesize=${this.pagesize}`);
-            const {
-                data: {
-                    pagenum,
-                    total,
-                    users
-                },
-                meta: {
-                    msg,
-                    status
-                }
-            } = res.data
-            this.usersList = users;
-        }
+  data () {
+    return {
+      username: ''
     }
-};
+  },
+  beforeCreate () {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      this.$message.warning('请先登录')
+      this.$router.push('/login')
+    }
+  },
+  mounted () {
+    this.username = localStorage.getItem('username')
+  },
+  methods: {
+    logout () {
+      localStorage.clear()
+      this.$message.warning('退出登录')
+      this.$router.push('/login')
+    }
+  }
+}
 </script>
 
 <style>

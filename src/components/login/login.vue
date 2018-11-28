@@ -15,30 +15,30 @@
 
 <script>
 export default {
-    data() {
-        return {
-            formdata: {
-                username: '',
-                password: ''
-            }
-        }
-    },
-    methods: {
-        login() {
-            this.$http.post('/login', this.formdata).then(res => {
-                const {meta:{msg, status}} = res.data;
-                if (status === 200) {
-                    const {token, username} = res.data.data;
-                    this.$message.success(msg);
-                    this.$router.push('/home');
-                    localStorage.setItem('token', token);
-                    localStorage.setItem('username', username);
-                } else {
-                    this.$message.error(msg)
-                }
-            })
-        }
+  data () {
+    return {
+      formdata: {
+        username: '',
+        password: ''
+      }
     }
+  },
+  methods: {
+    login () {
+      this.$http.post('/login', this.formdata).then(res => {
+        const {meta: {msg, status}} = res.data
+        if (status === 200) {
+          const {token, username} = res.data.data
+          this.$message.success(msg)
+          this.$router.push('/home')
+          localStorage.setItem('token', token)
+          localStorage.setItem('username', username)
+        } else {
+          this.$message.error(msg)
+        }
+      })
+    }
+  }
 }
 </script>
 

@@ -7,10 +7,14 @@ import '../src/assets/css/index.css'
 import App from './App'
 import router from './router'
 import axios from 'axios'
+import moment from 'moment'
 
 Vue.use(ElementUI)
 Vue.prototype.$http = axios
 axios.defaults.baseURL = 'http://localhost:8888/api/private/v1/'
+Vue.filter('fmtDate', (value, fmtStr) => {
+  return moment(value).format(fmtStr)
+})
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
