@@ -29,14 +29,14 @@ export default {
       rightsList: []
     }
   },
-  mounted(){
-      this.getRights()
+  mounted () {
+    this.getRights()
   },
   methods: {
-      async getRights(){
-          const res = await this.$http.get(`rights/list`)
-          this.rightsList = res.data.data
-      }
+    async getRights () {
+      const res = await this.$http.get(`rights/list`)
+      this.rightsList = res.data.data
+    }
   }
 }
 </script>
