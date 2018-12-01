@@ -8,6 +8,7 @@ import Users from '../components/users/users.vue'
 import Roles from '../components/rights/roles.vue'
 import Rights from '../components/rights/rights.vue'
 import Goods from '../components/goods/goods.vue'
+import GoodAdd from '../components/goods/goodAdd.vue'
 
 Vue.use(Router)
 const router = new Router({
@@ -39,6 +40,11 @@ const router = new Router({
       name: 'goods',
       path: '/goods',
       component: Goods
+    },
+    {
+      name: 'goodAdd',
+      path: '/goodAdd',
+      component: GoodAdd
     }
     ]
   },
