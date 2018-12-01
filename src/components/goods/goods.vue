@@ -56,38 +56,38 @@
 
 <script>
 export default {
-  data() {
+  data () {
     return {
       goodsList: [],
       pagenum: 1,
       pagesize: 10,
-      query: "",
+      query: '',
       total: -1
-    };
+    }
   },
-  mounted() {
-    this.getGoodsList();
+  mounted () {
+    this.getGoodsList()
   },
   methods: {
-    async getGoodsList() {
+    async getGoodsList () {
       const res = await this.$http.get(
         `goods?query=${this.query}&pagenum=${this.pagenum}&pagesize=${
           this.pagesize
         }`
-      );
-      this.goodsList = res.data.data.goods;
-      this.total = res.data.data.total;
+      )
+      this.goodsList = res.data.data.goods
+      this.total = res.data.data.total
     },
-    handleSizeChange(i){
-        this.pagesize = i
-        this.getGoodsList()
+    handleSizeChange (i) {
+      this.pagesize = i
+      this.getGoodsList()
     },
-    handleCurrentChange(i){
-        this.pagenum = i
-        this.getGoodsList()
+    handleCurrentChange (i) {
+      this.pagenum = i
+      this.getGoodsList()
     }
   }
-};
+}
 </script>
 
 <style>

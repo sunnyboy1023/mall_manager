@@ -28,7 +28,7 @@
                 </el-form-item>
                 <el-form-item label="商品分类">
                     {{selectedOptions}}
-                    <el-cascader expand-trigger="hover" :options="options" :props="props" v-model="selectedOptions" @change="handleChange" clearable>
+                    <el-cascader expand-trigger="hover" :options="options" :props="props" v-model="selectedOptions" clearable>
                     </el-cascader>
                 </el-form-item>
 
@@ -62,7 +62,7 @@
 <script>
 
 import {
-    quillEditor
+  quillEditor
 } from 'vue-quill-editor'
 
 // require styles
@@ -71,78 +71,77 @@ import 'quill/dist/quill.snow.css'
 import 'quill/dist/quill.bubble.css'
 
 export default {
-    data() {
-        return {
-            active: '1',
-            goodForm: {},
-            selectedOptions: [],
-            options: [],
-            props: {
-                value: 'cat_id',
-                label: 'cat_name',
-                children: 'children'
-            },
-            optionForm: [],
-            selectForm: [],
-            paramsForm: [],
-            headers: {
-                Authorization: localStorage.getItem('token')
-            }
-        }
-    },
-    created() {
-        this.getGoodscategories()
-    },
-    methods: {
-        async getGoodscategories() {
-            const res = await this.$http.get(`categories?type=3`)
-            this.options = res.data.data
-        },
-        async tabChange() {
-            if (this.active === '2' || this.active === '3') {
-                if (this.selectedOptions.length !== 3) {
-                    this.$message.warning('请先选择三级商品分类')
-                    return
-                } else if (this.active === '2') {
-                    const res1 = await this.$http.get(`categories/${this.selectedOptions[2]}/attributes?sel=many`)
-                    let arr = res1.data.data
-                    arr.forEach((v) => {
-                        v.attr_vals = v.attr_vals.split(',')
-                        this.optionForm = res1.data.data
-                    })
-                } else if (this.active === '3') {
-                    const res2 = await this.$http.get(`categories/${this.selectedOptions[2]}/attributes?sel=only`)
-                    this.paramsForm = res2.data.data
-                    console.log(this.paramsForm)
-                    console.log(res2)
-                }
-            }
-        },
-        handleRemove(file, fileList) {
-            console.log(file, fileList);
-        },
-        handlePreview(file) {
-            console.log(file);
-        },
-        handleSuccess(file) {
-            console.log(file);
-        },
-        addGood(){
-            // goods_name	商品名称	不能为空
-            // goods_cat	以为','分割的分类列表	不能为空
-            // goods_price	价格	不能为空
-            // goods_number	数量	不能为空
-            // goods_weight	重量	不能为空
-            // goods_introduce	介绍	可以为空
-            // pics	上传的图片临时路径（对象）	可以为空
-            // attrs	商品的参数（数组）	可以为空
-            console.log(this.goodForm)
-        }
-    },
-    components: {
-        quillEditor
+  data () {
+    return {
+      active: '1',
+      goodForm: {},
+      selectedOptions: [],
+      options: [],
+      props: {
+        value: 'cat_id',
+        label: 'cat_name',
+        children: 'children'
+      },
+      optionForm: [],
+      selectForm: [],
+      paramsForm: [],
+      headers: {
+        Authorization: localStorage.getItem('token')
+      }
     }
-};
+  },
+  created () {
+    this.getGoodscategories()
+  },
+  methods: {
+    async getGoodscategories () {
+      const res = await this.$http.get(`categories?type=3`)
+      this.options = res.data.data
+    },
+    async tabChange () {
+      if (this.active === '2' || this.active === '3') {
+        if (this.selectedOptions.length !== 3) {
+          this.$message.warning('请先选择三级商品分类')
+        } else if (this.active === '2') {
+          const res1 = await this.$http.get(`categories/${this.selectedOptions[2]}/attributes?sel=many`)
+          let arr = res1.data.data
+          arr.forEach((v) => {
+            v.attr_vals = v.attr_vals.split(',')
+            this.optionForm = res1.data.data
+          })
+        } else if (this.active === '3') {
+          const res2 = await this.$http.get(`categories/${this.selectedOptions[2]}/attributes?sel=only`)
+          this.paramsForm = res2.data.data
+          console.log(this.paramsForm)
+          console.log(res2)
+        }
+      }
+    },
+    handleRemove (file, fileList) {
+      console.log(file, fileList)
+    },
+    handlePreview (file) {
+      console.log(file)
+    },
+    handleSuccess (file) {
+      console.log(file)
+    },
+    addGood () {
+      // goods_name	商品名称	不能为空
+      // goods_cat	以为','分割的分类列表	不能为空
+      // goods_price	价格	不能为空
+      // goods_number	数量	不能为空
+      // goods_weight	重量	不能为空
+      // goods_introduce	介绍	可以为空
+      // pics	上传的图片临时路径（对象）	可以为空
+      // attrs	商品的参数（数组）	可以为空
+      console.log(this.goodForm)
+    }
+  },
+  components: {
+    quillEditor
+  }
+}
 </script>
 
 <style>
